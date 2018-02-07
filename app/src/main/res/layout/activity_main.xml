@@ -18,14 +18,16 @@
 
         <TextView
             android:id="@+id/txt_display_time"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:focusable="false"
-            android:padding="30dp"
+            android:gravity="center"
+            android:padding="20dp"
             android:text="Click to select Time"
             android:textColor="@android:color/black"
-            android:textSize="28dp"
+            android:textSize="25dp"
             android:textStyle="italic|bold" />
 
         <EditText

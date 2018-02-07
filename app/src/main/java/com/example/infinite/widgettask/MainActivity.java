@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.format.DateFormat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,6 +28,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button submit;
 
     private Context context;
+
+    private String strTime;
+
+    private DateFormat dff;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,17 +71,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.txt_display_time:
 
-                Calendar mcurrentTime = Calendar.getInstance();
+                final Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
+
                 mTimePicker = new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+
                         String str_selected_time = "Selected Time : " + String.valueOf(selectedHour) + ":" + String.valueOf(selectedMinute);
+
+                        strTime = String.valueOf(selectedHour) + ":" + String.valueOf(selectedMinute);
+
                         displayTime.setText(str_selected_time);
+
                     }
-                }, hour, minute, true);
+                }, hour, minute, false);
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
 
@@ -89,19 +102,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 if (!time.equalsIgnoreCase("Click to select Time")) {
 
+
                     SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = pref.edit();
+
+                    String date = (String) dff.format("yyyy-MM-dd", new Date());
+
+                    String dateTime = date + " " + strTime;
 
                     String label = edt_lbl.getText().toString();
 
                     editor.putString("time", time);
                     editor.putString("label", label);
-                    editor.apply();
+                    editor.putString("dateTime", dateTime);
 
                     Toast toast = Toast.makeText(context, "Widget Added, to display it on home screen just select it from \"Add widgets\" by pressing long click on your home screen", Toast.LENGTH_LONG);
                     TextView v = (TextView) toast.getView().findViewById(android.R.id.message);
                     v.setTextColor(Color.GREEN);
                     toast.show();
+
+                    editor.apply();
 
                 } else {
 
@@ -121,6 +141,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         InputMethodManager inputMethodManager = (InputMethodManager) getBaseContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+
     }
+
 }
 

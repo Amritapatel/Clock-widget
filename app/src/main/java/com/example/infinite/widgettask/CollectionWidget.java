@@ -57,7 +57,7 @@ public class CollectionWidget extends AppWidgetProvider {
         SharedPreferences pref = context.getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         String time = pref.getString("time", null);
-        String name = pref.getString("leble", null);
+        String name = pref.getString("label", null);
         views.setTextViewText(R.id.time, time);
         views.setTextViewText(R.id.name, name);
 
@@ -74,7 +74,7 @@ public class CollectionWidget extends AppWidgetProvider {
         SharedPreferences pref = context.getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
         String time = pref.getString("time", null);
-        String name = pref.getString("leble", null);
+        String name = pref.getString("label", null);
         views.setTextViewText(R.id.time, time);
         views.setTextViewText(R.id.name, name);
 
